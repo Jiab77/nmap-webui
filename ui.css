@@ -1,0 +1,184 @@
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+body.pushable.extended {
+	height: calc(100% + 500px);
+}
+
+/* body.pushable {
+	background: #545454;
+} */
+
+/* body.pushable body.pusher.dimmed {
+	background: #545454;
+} */
+
+.pusher {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	min-height: 100vh !important;
+	height: 100%;
+	overflow: visible !important;
+}
+
+main {
+	/* flex: 1 0 auto; */
+	-webkit-box-flex: 1;
+	-webkit-flex: 1 1 auto;
+	-ms-flex: 1 1 auto;
+	flex: 1 1 auto;
+}
+
+main .ui.cards {
+	margin-top: 1em;
+}
+
+.hidden.menu {
+	display: none;
+}
+
+.hide {
+	display: none !important;
+}
+
+.scrolling-table {
+	max-height: 500px;
+	overflow-y: scroll;
+}
+.ui.table.sticky-headed thead tr:first-child > th {
+	position: sticky !important;
+	top: 0;
+	z-index: 2;
+}
+.ui.table.sticky-headed > thead > tr:first-child > th:first-child {
+	border-radius: unset;
+}
+.ui.table.sticky-headed > thead > tr:first-child > th:last-child{
+	border-radius: unset;
+}
+.ui.table.sticky-headed.inverted .darken {
+	/* background-color: rgba(0, 0, 0, 0.65) !important; */
+	background-color: #333333 !important;
+}
+/* .ui.table.sticky-headed.inverted .darken:hover {
+	background-color: rgba(0, 0, 0, 0.85) !important;
+} */
+.ui.table.sticky-headed:not(.inverted) .darken {
+	border-top: 1px solid rgba(34, 36, 38, 0.1);
+}
+
+.secondary.menu .header.large.screen.only {
+	display: block;
+}
+
+.secondary.menu .header.mobile.only {
+	display: none !important;
+}
+
+.secondary.menu .header.mobile.only {
+	transform: translateX(-20px);
+}
+
+.footer.segment {
+	padding: 5em 0em;
+}
+
+.secondary.menu .toc.item {
+	display: none;
+}
+
+/* Smoothie Charts */
+.charts {
+	border-radius: 3px;
+	/* width: 100%; */
+}
+.charts.large.screen.only {
+	display: block !important;
+}
+.charts.mobile.only {
+	display: none !important;
+}
+div.smoothie-chart-tooltip {
+	background: #444;
+	padding: 1em;
+	margin-top: 20px;
+	font-family: consolas;
+	color: white;
+	font-size: 10px;
+	pointer-events: none;
+	z-index: 9999999;
+}
+
+/* It's slow down the whole UI... */
+/* .ui.segment, .ui.menu, .ui.table {
+	transition: background-color .8s, color .8s;
+} */
+
+@media only screen and (max-width: 900px) {
+	/* body.pushable {
+		background: #FFFFFF;
+	} */
+	/* body.pushable body.pusher.dimmed {
+		background: #545454;
+	} */
+	/* .ui.fixed.menu {
+		display: none !important;
+	} */
+	.secondary.menu .right.menu {
+		display: none !important;
+	}
+	.secondary.menu .toc.item {
+		display: block;
+	}
+	.secondary.menu .header.large.screen.only {
+		display: none !important;
+	}
+	.secondary.menu .header.mobile.only {
+		display: block !important;
+	}
+
+	.charts.large.screen.only {
+		display: none !important;
+	}
+	.charts.mobile.only {
+		display: block !important;
+	}
+}
+@media only screen and (max-width: 700px) {
+	/* body.pushable {
+		background: #FFFFFF;
+	} */
+	/* body.pushable body.pusher.dimmed {
+		background: #545454;
+	} */
+	/* .ui.fixed.menu {
+		display: none !important;
+	} */
+	.secondary.menu .right.menu {
+		display: none !important;
+	}
+	.secondary.menu .toc.item {
+		display: block;
+	}
+	.secondary.menu .header.large.screen.only {
+		display: none !important;
+	}
+	.secondary.menu .header.mobile.only {
+		display: block !important;
+	}
+
+	.charts.large.screen.only {
+		display: none !important;
+	}
+	.charts.mobile.only {
+		display: block !important;
+	}
+}
