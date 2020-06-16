@@ -9,3 +9,14 @@ As most of the `nmap` features requires to be `root`, you will have to run this 
 # Authorize nmap to run as root without password
 echo "$USER ALL = NOPASSWD: $(which nmap)" | sudo tee -a /etc/sudoers.d/nmap
 ```
+
+
+## Preview
+
+### Light theme
+
+![image](https://user-images.githubusercontent.com/9881407/84726211-ab278e80-af8c-11ea-8713-0def6c51e648.png)
+
+### Dark theme
+
+![image](https://user-images.githubusercontent.com/9881407/84726262-c5fa0300-af8c-11ea-942a-59195634107f.png)
