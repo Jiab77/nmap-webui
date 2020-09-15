@@ -8,7 +8,7 @@
 
 	<!-- Site Properties -->
 	<title>Fomantic UI &ndash; Error 404</title>
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.3/dist/semantic.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.7/semantic.min.css" integrity="sha512-g/MzOGVPy3OQ4ej1U+qe4D/xhLwUn5l5xL0Fa7gdC258ZWVJQGwsbIR47SWMpRxSPjD0tfu/xkilTy+Lhrl3xg==" crossorigin="anonymous" />
 
 	<!-- Custom CSS -->
 	<link rel="stylesheet" type="text/css" href="static.css">
@@ -20,7 +20,10 @@
 	<!-- Top Following Menu -->
 	<div class="ui top fixed menu transition hidden">
 		<div class="ui fluid container">
-			<div class="header link item"><a href="index.html"><i class="cubes icon"></i>libVirt Web</a></div>
+			<div class="header link item">
+				<a href="/"><i class="glasses icon"></i>Nmap Web UI</a>
+				<a href="#!" onclick="$('.ui.sidebar').sidebar('toggle');"><i class="menu icon"></i>Menu</a>
+			</div>
 			<div class="right menu">
 				<div class="ui item animated labeled icon button" id="dark-theme">
 					<div class="visible content">
@@ -42,29 +45,6 @@
 						Dark
 					</div>
 				</div>
-				<!-- <div class="ui dropdown item">
-					<i class="home icon"></i>
-					Menu
-					<i class="dropdown icon"></i>
-					<div class="menu">
-						<a href="dashboard.html" class="item"><i class="chart pie icon"></i>Dashboard</a>
-						<a href="index.html" class="item active"><i class="grip horizontal icon"></i>Modules</a>
-						<a href="help.html" class="item"><i class="question circle outline icon"></i>Help</a>
-						<a class="item"><i class="redo icon"></i>Refresh</a>
-					</div>
-				</div>
-				<div class="ui dropdown item">
-					<i class="cog icon"></i>
-					Settings
-					<i class="dropdown icon"></i>
-					<div class="menu">
-						<a class="item"><i class="us flag"></i>English</a>
-						<a class="item"><i class="fr flag"></i>French</a>
-						<a class="item"><i class="ru flag"></i>Russian</a>
-						<a class="item"><i class="es flag"></i>Spanish</a>
-						<a class="item"><i class="ch flag"></i>Swiss French</a>
-					</div>
-				</div> -->
 			</div>
 		</div>
 	</div>
@@ -72,21 +52,17 @@
 	<!-- Sidebar Menu -->
 	<div class="ui left inverted sidebar vertical menu">
 		<div class="header link item">
-			<a href="index.html">
-				<i class="cubes icon" style="float: left; margin: 0 0.35714286em 0 0;"></i>
-				libVirt Web
+			<a href="/">
+				<i class="glasses icon" style="float: left; margin: 0 0.35714286em 0 0;"></i>
+				Nmap Web UI
 			</a>
 		</div>
-		<a href="static-dashboard.html" class="item">
-			<i class="chart pie icon" style="float: left; margin: 0 0.35714286em 0 0;"></i>
-			Dashboard
+		<a href="#!" class="item">
+			<i class="eye icon" style="float: left; margin: 0 0.35714286em 0 0;"></i>
+			Scan
 		</a>
-		<a href="index.html" class="item active">
-			<i class="grip horizontal icon" style="float: left; margin: 0 0.35714286em 0 0;"></i>
-			Modules
-		</a>
-		<a href="static-help.html" class="item">
-			<i class="question circle outline icon" style="float: left; margin: 0 0.35714286em 0 0;"></i>
+		<a href="#!" class="item">
+			<i class="question circle icon" style="float: left; margin: 0 0.35714286em 0 0;"></i>
 			Help
 		</a>
 		<a class="item">
@@ -111,6 +87,10 @@
 				</div>
 			</div>
 		</div>
+		<a class="item" href="#!" onclick="$('.ui.sidebar').sidebar('toggle');">
+			<i class="arrow left icon" style="float: left; margin: 0 0.35714286em 0 0;"></i>
+			Hide menu
+		</a>
 	</div>
 
 	<!-- Page Contents -->
@@ -120,8 +100,13 @@
 			<div class="ui fluid container">
 				<div class="ui large secondary inverted menu">
 					<a class="toc item"><i class="sidebar icon"></i></a>
-					<div class="header link item large screen only"><a href="index.html"><i class="cubes icon"></i>libVirt Web</a></div>
-					<div class="header link item center aligned mobile only"><a href="index.html"><i class="cubes icon"></i>libVirt Web</a></div>
+					<div class="header link item large screen only">
+						<a href="/"><i class="glasses icon"></i>Nmap Web UI</a>
+					</div>
+					<div class="link item large screen only">
+						<a href="#!" onclick="$('.ui.sidebar').sidebar('toggle');"><i class="bars icon"></i>Menu</a>
+					</div>
+					<div class="header link item center aligned mobile only"><a href="/"><i class="glasses icon"></i>Nmap Web UI</a></div>
 					<div class="right menu">
 						<div class="ui item animated labeled icon button" id="dark-theme">
 							<div class="visible content">
@@ -143,9 +128,8 @@
 								Dark
 							</div>
 						</div>
-						<a href="static-dashboard.html" class="item"><i class="chart pie icon"></i>Dashboard</a>
-						<a href="index.html" class="item active"><i class="grip horizontal icon"></i>Modules</a>
-						<a href="static-help.html" class="item"><i class="question circle outline icon"></i>Help</a>
+						<a href="#!" class="item"><i class="eye icon"></i>Scan</a>
+						<a href="#!" class="item"><i class="question circle icon"></i>Help</a>
 						<a class="item"><i class="redo icon"></i>Refresh</a>
 						<div class="ui inverted dropdown item">
 							<i class="cog icon"></i> Settings <i class="dropdown icon"></i>
@@ -175,21 +159,21 @@
 			<div class="ui container">
 				<div class="ui stackable inverted divided equal height grid">
 					<div class="ten wide column">
-						<h4 class="ui inverted header"><i class="cubes icon"></i>libVirt Web</h4>
-						<p>A simple web interface based on <a href="https://libvirt.org/" target="_blank">libVirt</a> and <a href="http://libguestfs.org/" target="_blank">libguestfs</a>.</p>
+						<h4 class="ui inverted header"><i class="glasses icon"></i>Nmap Web UI</h4>
+						<p>A simple web interface based on <a href="https://nmap.org/" target="_blank">Nmap</a> and <a href="https://github.com/abdolence/x2js" target="_blank">X2JS</a>.</p>
 					</div>
 					<div class="three wide column">
 						<h4 class="ui inverted header">About</h4>
 						<div class="ui inverted link list">
-							<a class="item" href="https://github.com/Jiab77/libvirt-web" target="_blank">Project</a>
+							<a class="item" href="https://github.com/Jiab77/nmap-webui" target="_blank">Project</a>
 							<a class="item" href="#!">Documentation</a>
 						</div>
 					</div>
 					<div class="three wide column">
 						<h4 class="ui inverted header">Credits</h4>
 						<div class="ui inverted link list">
-							<a class="item" href="https://libvirt.org/" target="_blank">libVirt</a>
-							<a class="item" href="http://libguestfs.org/" target="_blank">libguestfs</a>
+							<a class="item" href="https://nmap.org/" target="_blank">Nmap</a>
+							<a class="item" href="https://github.com/abdolence/x2js" target="_blank">X2JS</a>
 							<a class="item" href="https://fomantic-ui.com/" target="_blank">Fomantic-UI</a>
 						</div>
 					</div>
@@ -206,8 +190,16 @@
 	</div>
 
 	<!-- Fomantic-UI -->
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.3/dist/semantic.js"></script>
-	<script src="static.js"></script>
+	<script type="text/javascript" id="jquery-js" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+	<script type="text/javascript" id="fomantic-ui-js" src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.7/semantic.min.js" integrity="sha512-1Nyd5H4Aad+OyvVfUOkO/jWPCrEvYIsQENdnVXt1+Jjc4NoJw28nyRdrpOCyFH4uvR3JmH/5WmfX1MJk2ZlhgQ==" crossorigin="anonymous"></script>
+	<!-- Including Dark Theme -->
+	<script type="text/javascript" id="dark-ui-js" src="dark-fomantic-ui.js"></script>
+	<!-- Including UI code -->
+	<script type="text/javascript" id="ui-js" src="ui.js"></script>
+	<script type="text/javascript" id="ui-js" src="ui.hooks.js"></script>
+	<!-- Including Parser code -->
+	<script type="text/javascript" id="parser-js" src="xml2json-wrapper.js"></script>
+	<!-- Including App code -->
+	<script type="text/javascript" id="app-js" src="app.js"></script>
 </body>
 </html>
