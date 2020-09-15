@@ -30,7 +30,7 @@ $(function () {
 		// .sidebar('setting', { transition: 'scale down', mobileTransition: 'scale down' })
 		.sidebar('setting', { transition: 'overlay', mobileTransition: 'overlay' })
 		.sidebar('attach events', '.toc.item');
-	
+
 	// Dropdowns
 	$('.ui.dropdown').dropdown({
 		on: 'hover'
@@ -47,8 +47,11 @@ $(function () {
 		$(this).closest('.message').transition('fade');
 	});
 
+	// Modals
+	$('.ui.modal').modal();
+
 	// Tooltips
-	$('.tooltipped').popup();;
+	$('.tooltipped').popup();
 
 	// Scrolling tables
 	// TODO: Add throttling...
