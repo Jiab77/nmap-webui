@@ -82,11 +82,11 @@ $(function () {
 					if (Report.settings.debug === true) {
 						console.info('Got XML Document:', response);
 					}
-	
+
 					var x2js = new X2JS();
 					var jsonObj = x2js.xml2json(response);
 					Report.converted = jsonObj;
-	
+
 					if (typeof jsonObj === 'object') {
 						if (Report.settings.debug === true) {
 							console.info('Got JSON Object:', jsonObj);
@@ -227,7 +227,7 @@ $(function () {
 			var nBytes = 0,
 				oFiles = fileList,
 				nFiles = oFiles.length;
-			
+
 			for (var nFileId = 0; nFileId < nFiles; nFileId++) {
 				nBytes += oFiles[nFileId].size;
 			}
@@ -292,7 +292,7 @@ $(function () {
 		generate: function (data, container) {
 			var html;
 
-			// Main Container
+			// Main Container (can't be inverted because of 'styled' class)
 			html  = '<div class="ui styled fluid accordion">';
 			html += '<div class="active title">';
 			html += '<i class="dropdown icon"></i>';
@@ -303,7 +303,7 @@ $(function () {
 			html += '<div class="active content">';
 
 			// Report Table
-			html += '<table class="ui celled table">';
+			html += '<table class="ui celled inverted table">';
 			html += '<thead>';
 			html += '<tr>';
 			html += '<th>IP</th>';
@@ -318,35 +318,100 @@ $(function () {
 			html += '</thead>';
 			html += '<tbody>';
 			html += '<tr>';
+
+			// IP
 			html += '<td>' + (
 				Array.isArray(data.host.address)
 					? data.host.address[0]._addr
 					: data.host.address._addr
 			) + '</td>';
+
+			// MAC
 			html += '<td>' + (
 				Array.isArray(data.host.address) && data.host.address.length > 1
 					? data.host.address[1]._addr
-					: ''
+					: 'N/A'
 			) + '</td>';
-			html += '<td>' + (
+
+			// Hostname
+			html += '<td><a href="#!" onclick="$(\'.ui.modal\').modal(\'show\');">' + (
 				Array.isArray(data.host.hostnames.hostname)
 					? data.host.hostnames.hostname[0]._name
 					: data.host.hostnames.hostname
-			) + '</td>';
-			html += '<td class="center aligned">' + (
+			) + '</a></td>';
+
+			// Port(s)
+			html += '<td class="center aligned"><a href="#!" onclick="$(\'.ui.modal\').modal(\'show\');">' + (
 				Array.isArray(data.host.ports.port)
 					? data.host.ports.port.length
 					: data.host.ports.port._portid + '/' + data.host.ports.port._protocol + ' (' + data.host.ports.port.service._name + ')'
-			) + '</td>';
+			) + '</a></td>';
+
+			// Date start
 			html += '<td>' + data._startstr + '</td>';
+
+			// Date end
 			html += '<td>' + data.runstats.finished._timestr + '</td>';
+
+			// Time elapsed
 			html += '<td class="center aligned">' + data.runstats.finished._elapsed + '</td>';
+
+			// Exit status
 			html += '<td>' + data.runstats.finished._exit + '</td>';
 			html += '</tr>';
 			html += '</tbody>';
 			html += '</table>';
 
 			// End Content
+			html += '</div>';
+
+			// Scan modal
+			html += '<div class="ui inverted modal">';
+			html += '<div class="header">Scan details</div>';
+			html += '<div class="content">';
+			html += '<table class="ui celled inverted table">';
+			html += '<thead>';
+			html += '<tr>';
+			html += '<th>Port</th>';
+			html += '<th>State</th>';
+			html += '<th>Service</th>';
+			html += '<th>Method</th>';
+			html += '<th>TTL</th>';
+			html += '<th>Product</th>';
+			html += '</tr>';
+			html += '</thead>';
+			html += '<tbody>';
+
+			for (let index = 0; index < Report.converted.nmaprun.host.ports.port.length; index++) {
+				const port = Report.converted.nmaprun.host.ports.port[index];
+
+				html += '<tr>';
+				html += '<td>' + port._portid + '/' + port._protocol + '</td>';
+				html += '<td>' + port.state._state + '</td>';
+				html += '<td>' + port.service._name + '</td>';
+				html += '<td>' + port.state._reason + '</td>';
+				html += '<td>' + port.state._reason_ttl + '</td>';
+				if (port.service._product && port.service._version) {
+					html += '<td>' + port.service._product + ' ' + port.service._version + '</td>';
+				}
+				else if (port.service._product && !port.service._version) {
+					html += '<td>' + port.service._product + '</td>';
+				}
+				else if (port.service._extrainfo && port.service._extrainfo !== "access denied") {
+					html += '<td>' + port.service._extrainfo + '</td>';
+				}
+				else {
+					html += '<td>' + port.service._name + '</td>';
+				}
+				html += '</tr>';
+			}
+
+			html += '</table>';
+			html += '</div>';
+			html += '<div class="actions">';
+			html += '<div class="ui ok green inverted button">Ok</div>';
+			html += '<div class="ui cancel button">Cancel</div>';
+			html += '</div>';
 			html += '</div>';
 
 			// End Container
@@ -362,6 +427,14 @@ $(function () {
 			if (Report.settings["fomantic-ui"] === true || Report.settings["semantic-ui"] === true) {
 				// Refresh accordions
 				$('.ui.accordion').accordion('refresh');
+
+				// Refresh disabled links
+				$('a[href="#!"]').on('click', function(event) {
+					event.preventDefault();
+				});
+
+				// Refresh modals
+				$('.ui.modal').modal('refresh');
 			}
 		},
 		getStructure: function () {
