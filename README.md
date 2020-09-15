@@ -10,7 +10,6 @@ As most of the `nmap` features requires to be `root`, you will have to run this 
 echo "$USER ALL = NOPASSWD: $(which nmap)" | sudo tee -a /etc/sudoers.d/nmap
 ```
 
-
 ## Preview
 
 ### Light theme
@@ -20,3 +19,21 @@ echo "$USER ALL = NOPASSWD: $(which nmap)" | sudo tee -a /etc/sudoers.d/nmap
 ### Dark theme
 
 ![image](https://user-images.githubusercontent.com/9881407/84726262-c5fa0300-af8c-11ea-942a-59195634107f.png)
+
+## Usage
+
+1. Start minimal web server
+
+```bash
+node server.js
+```
+
+2. Start API web server
+
+```bash
+# For PHP:
+php -S localhost:8000 server.php
+
+# For NodeJS:
+# TODO
+```
