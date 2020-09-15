@@ -19,8 +19,8 @@ const process = require('process');
 // Config
 const documentRoot = '.';
 const debugMode = false;
-const enableDirectoryListing = true;
-const enableUrlDecoding = true;
+const enableDirectoryListing = false;
+const enableUrlDecoding = false;
 const hostname = process.env.NODE_WEB_HOST || '127.0.0.1';
 const port = process.env.NODE_WEB_PORT || 8001;
 
