@@ -337,7 +337,7 @@ $(function () {
 			html += '<td><a href="#!" onclick="$(\'.ui.modal\').modal(\'show\');">' + (
 				Array.isArray(data.host.hostnames.hostname)
 					? data.host.hostnames.hostname[0]._name
-					: data.host.hostnames.hostname
+					: data.host.hostnames.hostname._name
 			) + '</a></td>';
 
 			// Port(s)
