@@ -440,8 +440,35 @@ $(function () {
 			html += '</thead>';
 			html += '<tbody>';
 
-			for (let index = 0; index < data.host.ports.port.length; index++) {
-				const port = data.host.ports.port[index];
+			if (Array.isArray(data.host.ports.port)) {
+				for (let index = 0; index < data.host.ports.port.length; index++) {
+					const port = data.host.ports.port[index];
+
+					console.log(port);
+
+					html += '<tr>';
+					html += '<td>' + port._portid + '/' + port._protocol + '</td>';
+					html += '<td>' + port.state._state + '</td>';
+					html += '<td>' + port.service._name + '</td>';
+					html += '<td>' + port.state._reason + '</td>';
+					html += '<td>' + port.state._reason_ttl + '</td>';
+					if (port.service._product && port.service._version) {
+						html += '<td>' + port.service._product + ' ' + port.service._version + '</td>';
+					}
+					else if (port.service._product && !port.service._version) {
+						html += '<td>' + port.service._product + '</td>';
+					}
+					else if (port.service._extrainfo && port.service._extrainfo !== "access denied") {
+						html += '<td>' + port.service._extrainfo + '</td>';
+					}
+					else {
+						html += '<td>' + port.service._name + '</td>';
+					}
+					html += '</tr>';
+				}
+			}
+			else {
+				const port = data.host.ports.port;
 
 				console.log(port);
 
