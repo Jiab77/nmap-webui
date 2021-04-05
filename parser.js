@@ -317,48 +317,106 @@ $(function () {
 			html += '</tr>';
 			html += '</thead>';
 			html += '<tbody>';
-			html += '<tr>';
 
-			// IP
-			html += '<td>' + (
-				Array.isArray(data.host.address)
-					? data.host.address[0]._addr
-					: data.host.address._addr
-			) + '</td>';
+			if (Array.isArray(data.host)) {
+				for (let index = 0; index < data.host.length; index++) {
+					const scannedHost = data.host[index];
 
-			// MAC
-			html += '<td>' + (
-				Array.isArray(data.host.address) && data.host.address.length > 1
-					? data.host.address[1]._addr
-					: 'N/A'
-			) + '</td>';
+					console.log(scannedHost);
 
-			// Hostname
-			html += '<td><a href="#!" onclick="$(\'.ui.modal\').modal(\'show\');">' + (
-				Array.isArray(data.host.hostnames.hostname)
-					? data.host.hostnames.hostname[0]._name
-					: data.host.hostnames.hostname._name
-			) + '</a></td>';
+					html += '<tr>';
 
-			// Port(s)
-			html += '<td class="center aligned"><a href="#!" onclick="$(\'.ui.modal\').modal(\'show\');">' + (
-				Array.isArray(data.host.ports.port)
-					? data.host.ports.port.length
-					: data.host.ports.port._portid + '/' + data.host.ports.port._protocol + ' (' + data.host.ports.port.service._name + ')'
-			) + '</a></td>';
+					// IP
+					html += '<td>' + (
+						Array.isArray(scannedHost.address)
+							? scannedHost.address[0]._addr
+							: scannedHost.address._addr
+					) + '</td>';
 
-			// Date start
-			html += '<td>' + data._startstr + '</td>';
+					// MAC
+					html += '<td>' + (
+						Array.isArray(scannedHost.address) && scannedHost.address.length > 1
+							? scannedHost.address[1]._addr
+							: 'N/A'
+					) + '</td>';
 
-			// Date end
-			html += '<td>' + data.runstats.finished._timestr + '</td>';
+					// Hostname
+					html += '<td><a href="#!" onclick="$(\'.ui.modal\').modal(\'show\');">' + (
+						Array.isArray(scannedHost.hostnames.hostname)
+							? scannedHost.hostnames.hostname[0]._name
+							: scannedHost.hostnames.hostname._name
+					) + '</a></td>';
 
-			// Time elapsed
-			html += '<td class="center aligned">' + data.runstats.finished._elapsed + '</td>';
+					// Port(s)
+					html += '<td class="center aligned"><a href="#!" onclick="$(\'.ui.modal\').modal(\'show\');">' + (
+						Array.isArray(scannedHost.ports.port)
+							? scannedHost.ports.port.length
+							: scannedHost.ports.port._portid + '/' + scannedHost.ports.port._protocol + ' (' + scannedHost.ports.port.service._name + ')'
+					) + '</a></td>';
 
-			// Exit status
-			html += '<td>' + data.runstats.finished._exit + '</td>';
-			html += '</tr>';
+					// Date start
+					html += '<td>' + data._startstr + '</td>';
+
+					// Date end
+					html += '<td>' + data.runstats.finished._timestr + '</td>';
+
+					// Time elapsed
+					html += '<td class="center aligned">' + data.runstats.finished._elapsed + '</td>';
+
+					// Exit status
+					html += '<td>' + data.runstats.finished._exit + '</td>';
+					html += '</tr>';
+				}
+			}
+			else {
+				const scannedHost = data.host;
+
+				console.log(scannedHost);
+
+				html += '<tr>';
+
+				// IP
+				html += '<td>' + (
+					Array.isArray(scannedHost.address)
+						? scannedHost.address[0]._addr
+						: scannedHost.address._addr
+				) + '</td>';
+
+				// MAC
+				html += '<td>' + (
+					Array.isArray(scannedHost.address) && scannedHost.address.length > 1
+						? scannedHost.address[1]._addr
+						: 'N/A'
+				) + '</td>';
+
+				// Hostname
+				html += '<td><a href="#!" onclick="$(\'.ui.modal\').modal(\'show\');">' + (
+					Array.isArray(scannedHost.hostnames.hostname)
+						? scannedHost.hostnames.hostname[0]._name
+						: scannedHost.hostnames.hostname._name
+				) + '</a></td>';
+
+				// Port(s)
+				html += '<td class="center aligned"><a href="#!" onclick="$(\'.ui.modal\').modal(\'show\');">' + (
+					Array.isArray(scannedHost.ports.port)
+						? scannedHost.ports.port.length
+						: scannedHost.ports.port._portid + '/' + scannedHost.ports.port._protocol + ' (' + scannedHost.ports.port.service._name + ')'
+				) + '</a></td>';
+
+				// Date start
+				html += '<td>' + data._startstr + '</td>';
+
+				// Date end
+				html += '<td>' + data.runstats.finished._timestr + '</td>';
+
+				// Time elapsed
+				html += '<td class="center aligned">' + data.runstats.finished._elapsed + '</td>';
+
+				// Exit status
+				html += '<td>' + data.runstats.finished._exit + '</td>';
+				html += '</tr>';
+			}
+
 			html += '</tbody>';
 			html += '</table>';
 
@@ -382,8 +440,10 @@ $(function () {
 			html += '</thead>';
 			html += '<tbody>';
 
-			for (let index = 0; index < Report.converted.nmaprun.host.ports.port.length; index++) {
-				const port = Report.converted.nmaprun.host.ports.port[index];
+			for (let index = 0; index < data.host.ports.port.length; index++) {
+				const port = data.host.ports.port[index];
+
+				console.log(port);
 
 				html += '<tr>';
 				html += '<td>' + port._portid + '/' + port._protocol + '</td>';
@@ -409,8 +469,8 @@ $(function () {
 			html += '</table>';
 			html += '</div>';
 			html += '<div class="actions">';
-			html += '<div class="ui ok green inverted button">Ok</div>';
-			html += '<div class="ui cancel button">Cancel</div>';
+			html += '<div class="ui ok green inverted button">Close</div>';
+			// html += '<div class="ui cancel button">Cancel</div>';
 			html += '</div>';
 			html += '</div>';
 

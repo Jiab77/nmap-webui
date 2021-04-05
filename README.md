@@ -22,18 +22,21 @@ echo "$USER ALL = NOPASSWD: $(which nmap)" | sudo tee -a /etc/sudoers.d/nmap
 
 ## Usage
 
-1. Start minimal web server
+1. Start backend web server
 
 ```bash
-node server.js
+# For PHP
+php -S localhost:8000 backend.php
 ```
 
-2. Start API web server
+> The NodeJS version of the backend is not ready yet.
+
+2. Start frontend web server
 
 ```bash
-# For PHP:
-php -S localhost:8000 server.php
+# For PHP
+php -S localhost:8001 server.php
 
-# For NodeJS:
-# TODO
+# For NodeJS
+node server.js
 ```
