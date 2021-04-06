@@ -390,14 +390,14 @@ $(function () {
 				) + '</td>';
 
 				// Hostname
-				html += '<td><a href="#!" onclick="$(\'.ui.modal\').modal(\'show\');">' + (
+				html += '<td><a href="#!" onclick="$(\'.ui.modal.ports\').modal(\'show\');">' + (
 					Array.isArray(scannedHost.hostnames.hostname)
 						? scannedHost.hostnames.hostname[0]._name
 						: scannedHost.hostnames.hostname._name
 				) + '</a></td>';
 
 				// Port(s)
-				html += '<td class="center aligned"><a href="#!" onclick="$(\'.ui.modal\').modal(\'show\');">' + (
+				html += '<td class="center aligned"><a href="#!" onclick="$(\'.ui.modal.ports\').modal(\'show\');">' + (
 					Array.isArray(scannedHost.ports.port)
 						? scannedHost.ports.port.length
 						: scannedHost.ports.port._portid + '/' + scannedHost.ports.port._protocol + ' (' + scannedHost.ports.port.service._name + ')'
@@ -423,14 +423,15 @@ $(function () {
 			// End Content
 			html += '</div>';
 
-			// Scan modal
-			html += '<div class="ui inverted modal">';
+			// Scan details modal
+			html += '<div class="ui inverted modal ports">';
 			html += '<div class="header">Scan details</div>';
 			html += '<div class="content">';
 			html += '<table class="ui celled inverted table">';
 			html += '<thead>';
 			html += '<tr>';
 			html += '<th>Port</th>';
+			html += '<th>Scripts</th>';
 			html += '<th>State</th>';
 			html += '<th>Service</th>';
 			html += '<th>Method</th>';
@@ -442,53 +443,79 @@ $(function () {
 
 			if (Array.isArray(data.host.ports.port)) {
 				for (let index = 0; index < data.host.ports.port.length; index++) {
-					const port = data.host.ports.port[index];
+					const scannedPort = data.host.ports.port[index];
 
-					console.log(port);
+					console.log(scannedPort);
 
 					html += '<tr>';
-					html += '<td>' + port._portid + '/' + port._protocol + '</td>';
-					html += '<td>' + port.state._state + '</td>';
-					html += '<td>' + port.service._name + '</td>';
-					html += '<td>' + port.state._reason + '</td>';
-					html += '<td>' + port.state._reason_ttl + '</td>';
-					if (port.service._product && port.service._version) {
-						html += '<td>' + port.service._product + ' ' + port.service._version + '</td>';
-					}
-					else if (port.service._product && !port.service._version) {
-						html += '<td>' + port.service._product + '</td>';
-					}
-					else if (port.service._extrainfo && port.service._extrainfo !== "access denied") {
-						html += '<td>' + port.service._extrainfo + '</td>';
+					html += '<td>' + scannedPort._portid + ' (' + scannedPort._protocol + ')</td>';
+					if (scannedPort.script) {
+						html += '<td><a href="#!" onclick="$(\'.ui.modal.scripts.' + scannedPort._portid + '\').modal(\'show\');">';
+						html += (Array.isArray(scannedPort.script)
+									? scannedPort.script.length
+									: (typeof scannedPort.script === 'object' && scannedPort.script.hasOwnProperty('_id')
+										? 1
+										: 0)
+								);
+						html += '</a></td>';
 					}
 					else {
-						html += '<td>' + port.service._name + '</td>';
+						html += '<td>0</td>';
+					}
+					html += '<td>' + scannedPort.state._state + '</td>';
+					html += '<td>' + scannedPort.service._name + '</td>';
+					html += '<td>' + scannedPort.state._reason + '</td>';
+					html += '<td>' + scannedPort.state._reason_ttl + '</td>';
+					if (scannedPort.service._product && scannedPort.service._version) {
+						html += '<td>' + scannedPort.service._product + ' ' + scannedPort.service._version + '</td>';
+					}
+					else if (scannedPort.service._product && !scannedPort.service._version) {
+						html += '<td>' + scannedPort.service._product + '</td>';
+					}
+					else if (scannedPort.service._extrainfo && scannedPort.service._extrainfo !== "access denied") {
+						html += '<td>' + scannedPort.service._extrainfo + '</td>';
+					}
+					else {
+						html += '<td>' + scannedPort.service._name + '</td>';
 					}
 					html += '</tr>';
 				}
 			}
 			else {
-				const port = data.host.ports.port;
+				const scannedPort = data.host.ports.port;
 
-				console.log(port);
+				console.log(scannedPort);
 
 				html += '<tr>';
-				html += '<td>' + port._portid + '/' + port._protocol + '</td>';
-				html += '<td>' + port.state._state + '</td>';
-				html += '<td>' + port.service._name + '</td>';
-				html += '<td>' + port.state._reason + '</td>';
-				html += '<td>' + port.state._reason_ttl + '</td>';
-				if (port.service._product && port.service._version) {
-					html += '<td>' + port.service._product + ' ' + port.service._version + '</td>';
-				}
-				else if (port.service._product && !port.service._version) {
-					html += '<td>' + port.service._product + '</td>';
-				}
-				else if (port.service._extrainfo && port.service._extrainfo !== "access denied") {
-					html += '<td>' + port.service._extrainfo + '</td>';
+				html += '<td>' + scannedPort._portid + ' (' + scannedPort._protocol + ')</td>';
+				if (scannedPort.script) {
+					html += '<td><a href="#!" onclick="$(\'.ui.modal.scripts.' + scannedPort._portid + '\').modal(\'show\');">';
+					html += (Array.isArray(scannedPort.script)
+								? scannedPort.script.length
+								: (typeof scannedPort.script === 'object' && scannedPort.script.hasOwnProperty('_id')
+									? 1
+									: 0)
+							);
+					html += '</a></td>';
 				}
 				else {
-					html += '<td>' + port.service._name + '</td>';
+					html += '<td>N/A</td>';
+				}
+				html += '<td>' + scannedPort.state._state + '</td>';
+				html += '<td>' + scannedPort.service._name + '</td>';
+				html += '<td>' + scannedPort.state._reason + '</td>';
+				html += '<td>' + scannedPort.state._reason_ttl + '</td>';
+				if (scannedPort.service._product && scannedPort.service._version) {
+					html += '<td>' + scannedPort.service._product + ' ' + scannedPort.service._version + '</td>';
+				}
+				else if (scannedPort.service._product && !scannedPort.service._version) {
+					html += '<td>' + scannedPort.service._product + '</td>';
+				}
+				else if (scannedPort.service._extrainfo && scannedPort.service._extrainfo !== "access denied") {
+					html += '<td>' + scannedPort.service._extrainfo + '</td>';
+				}
+				else {
+					html += '<td>' + scannedPort.service._name + '</td>';
 				}
 				html += '</tr>';
 			}
@@ -501,11 +528,110 @@ $(function () {
 			html += '</div>';
 			html += '</div>';
 
+			// Scripts details modal
+			if (Array.isArray(data.host.ports.port)) {
+				for (let indexA = 0; indexA < data.host.ports.port.length; indexA++) {
+					if (data.host.ports.port[indexA].script) {
+						html += '<div class="ui inverted fullscreen modal scripts ' + data.host.ports.port[indexA]._portid + '">';
+						html += '<div class="header">Script executed on port (' + data.host.ports.port[indexA]._portid + ')</div>';
+						html += '<div class="scrolling content">';
+						html += '<table class="ui celled inverted table">';
+						html += '<thead>';
+						html += '<tr>';
+						html += '<th>Id</th>';
+						html += '<th>Output</th>';
+						html += '</tr>';
+						html += '</thead>';
+						html += '<tbody>';
+
+						if (Array.isArray(data.host.ports.port[indexA].script)) {
+							for (let indexB = 0; indexB < data.host.ports.port[indexA].script.length; indexB++) {
+								const scannedPortScript = data.host.ports.port[indexA].script[indexB];
+
+								console.log(scannedPortScript);
+
+								html += '<tr>';
+								html += '<td>' + scannedPortScript._id + '</td>';
+								html += '<td>' + scannedPortScript._output + '</td>';
+								html += '</tr>';
+							}
+						}
+						else {
+							const scannedPortScript = data.host.ports.port[indexA].script;
+
+							console.log(scannedPortScript);
+
+							html += '<tr>';
+							html += '<td>' + scannedPortScript._id + '</td>';
+							html += '<td>' + scannedPortScript._output + '</td>';
+							html += '</tr>';
+						}
+
+						html += '</table>';
+						html += '</div>';
+						html += '<div class="actions">';
+						html += '<div class="ui ok green inverted button">Close</div>';
+						// html += '<div class="ui cancel button">Cancel</div>';
+						html += '</div>';
+						html += '</div>';
+					}
+				}
+			}
+			else {
+				if (data.host.ports.port.script) {
+					html += '<div class="ui inverted fullscreen modal scripts ' + data.host.ports.port._portid + '">';
+					html += '<div class="header">Script executed on port (' + data.host.ports.port._portid + ')</div>';
+					html += '<div class="scrolling content">';
+					html += '<table class="ui celled inverted table">';
+					html += '<thead>';
+					html += '<tr>';
+					html += '<th>Id</th>';
+					html += '<th>Output</th>';
+					html += '</tr>';
+					html += '</thead>';
+					html += '<tbody>';
+
+					if (Array.isArray(data.host.ports.port.script)) {
+						for (let index = 0; index < data.host.ports.port.script.length; index++) {
+							const scannedPortScript = data.host.ports.port.script[index];
+
+							console.log(scannedPortScript);
+
+							html += '<tr>';
+							html += '<td>' + scannedPortScript._id + '</td>';
+							html += '<td>' + scannedPortScript._output + '</td>';
+							html += '</tr>';
+						}
+					}
+					else {
+						const scannedPortScript = data.host.ports.port.script;
+
+						console.log(scannedPortScript);
+
+						html += '<tr>';
+						html += '<td>' + scannedPortScript._id + '</td>';
+						html += '<td>' + scannedPortScript._output + '</td>';
+						html += '</tr>';
+					}
+
+					html += '</table>';
+					html += '</div>';
+					html += '<div class="actions">';
+					html += '<div class="ui ok green inverted button">Close</div>';
+					// html += '<div class="ui cancel button">Cancel</div>';
+					html += '</div>';
+					html += '</div>';
+				}
+			}
+
 			// End Container
 			html += '</div>';
 
 			// Clean previous container content
 			container.html('');
+
+			// Remove existing modals
+			container.remove('.ui.modal');
 
 			// Assign HTML code to container
 			container.html(html);
