@@ -520,6 +520,7 @@ $(function () {
 				html += '</tr>';
 			}
 
+			html += '</tbody>';
 			html += '</table>';
 			html += '</div>';
 			html += '<div class="actions">';
@@ -552,7 +553,87 @@ $(function () {
 
 								html += '<tr>';
 								html += '<td>' + scannedPortScript._id + '</td>';
-								html += '<td>' + scannedPortScript._output + '</td>';
+
+								switch (scannedPortScript._id) {
+									/* case 'vulners':
+										html += '<td>';
+										html += '<table class="ui celled inverted table">';
+										html += '<thead>';
+										html += '<tr>';
+										html += '<th>Id</th>';
+										html += '<th>Output</th>';
+										html += '</tr>';
+										html += '</thead>';
+										html += '<tbody>';
+
+										html += '</tbody>';
+										html += '</table>';
+										html += '</td>';
+										break;
+
+									case 'dns-nsid':
+										html += '<td>';
+										html += '<table class="ui celled inverted table">';
+										html += '<thead>';
+										html += '<tr>';
+										html += '<th>Id</th>';
+										html += '<th>Output</th>';
+										html += '</tr>';
+										html += '</thead>';
+										html += '<tbody>';
+
+										html += '</tbody>';
+										html += '</table>';
+										html += '</td>';
+										break; */
+
+									case 'ssh-hostkey':
+										html += '<td>';
+										if (scannedPortScript.table) {
+											for (let indexC = 0; indexC < scannedPortScript.table.length; indexC++) {
+												const scannedPortScriptSSH = scannedPortScript.table[indexC];
+
+												console.log(scannedPortScriptSSH);
+
+												html += '<table class="ui fixed single line celled inverted table">';
+												html += '<thead>';
+												html += '<tr>';
+
+												// Get a consistent table header as the order is imposible to predict
+												for (let indexD = 0; indexD < scannedPortScriptSSH.elem.length; indexD++) {
+													const scannedPortScriptSSHKey = scannedPortScriptSSH.elem[indexD];
+													html += '<th>' + scannedPortScriptSSHKey._key + '</th>';
+												}
+
+												html += '</tr>';
+												html += '</thead>';
+												html += '<tbody>';
+												html += '<tr>';
+
+												for (let indexD = 0; indexD < scannedPortScriptSSH.elem.length; indexD++) {
+													const scannedPortScriptSSHKey = scannedPortScriptSSH.elem[indexD];
+
+													if (scannedPortScriptSSHKey._key === 'key') {
+														html += '<td class="tooltipped" data-inverted="true" data-position="bottom center" title="' + scannedPortScriptSSHKey.__text + '">' + scannedPortScriptSSHKey.__text + '</td>';
+													}
+													else {
+														html += '<td>' + scannedPortScriptSSHKey.__text + '</td>';
+													}
+												}
+
+												html += '</tr>';
+												html += '</tbody>';
+												html += '</table>';
+											}
+										}
+										html += '</td>';
+										break;
+
+									default:
+										html += '<td>' + scannedPortScript._output + '</td>';
+										break;
+								}
+
 								html += '</tr>';
 							}
 						}
@@ -567,6 +648,7 @@ $(function () {
 							html += '</tr>';
 						}
 
+						html += '</tbody>';
 						html += '</table>';
 						html += '</div>';
 						html += '<div class="actions">';
@@ -614,6 +696,7 @@ $(function () {
 						html += '</tr>';
 					}
 
+					html += '</tbody>';
 					html += '</table>';
 					html += '</div>';
 					html += '<div class="actions">';
@@ -648,6 +731,9 @@ $(function () {
 
 				// Refresh modals
 				$('.ui.modal').modal('refresh');
+
+				// Refresh tooltips
+				$('.tooltipped').popup();
 			}
 		},
 		getStructure: function () {
