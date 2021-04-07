@@ -555,37 +555,91 @@ $(function () {
 								html += '<td>' + scannedPortScript._id + '</td>';
 
 								switch (scannedPortScript._id) {
-									/* case 'vulners':
+									case 'vulners':
 										html += '<td>';
-										html += '<table class="ui celled inverted table">';
-										html += '<thead>';
-										html += '<tr>';
-										html += '<th>Id</th>';
-										html += '<th>Output</th>';
-										html += '</tr>';
-										html += '</thead>';
-										html += '<tbody>';
+										if (scannedPortScript.table.table) {
+											for (let indexC = 0; indexC < scannedPortScript.table.table.length; indexC++) {
+												const scannedPortScriptVulners = scannedPortScript.table.table[indexC];
 
-										html += '</tbody>';
-										html += '</table>';
+												html += '<table class="ui fixed single line celled inverted table">';
+												html += '<thead>';
+												html += '<tr>';
+
+												// Get a consistent table header as the order is imposible to predict
+												for (let indexD = 0; indexD < scannedPortScriptVulners.elem.length; indexD++) {
+													const scannedPortScriptVulnersHeader = scannedPortScriptVulners.elem[indexD];
+													html += '<th>' + scannedPortScriptVulnersHeader._key + '</th>';
+												}
+
+												html += '</tr>';
+												html += '</thead>';
+												html += '<tbody>';
+												html += '<tr>';
+
+												for (let indexD = 0; indexD < scannedPortScriptVulners.elem.length; indexD++) {
+													const scannedPortScriptVulnersKey = scannedPortScriptVulners.elem[indexD];
+
+													if (scannedPortScriptVulnersKey._key === 'type') {
+														html += '<td>' + scannedPortScriptVulnersKey.__text + '</td>';
+													}
+													else if (scannedPortScriptVulnersKey._key === 'id') {
+														scannedPortScriptVulners.elem.forEach(element => {
+															if (element._key === 'type') {
+																switch (element.__text) {
+																	case 'exploitpack':
+																		scannedPortScriptVulnersKey.__url = 'https://vulners.com/exploitpack/';
+																		break;
+
+																	case 'exploitdb':
+																		scannedPortScriptVulnersKey.__url = 'https://vulners.com/exploitdb/';
+																		break;
+
+																	case 'cve':
+																		scannedPortScriptVulnersKey.__url = 'https://vulners.com/cve/';
+																		break;
+
+																	case 'canvas':
+																		scannedPortScriptVulnersKey.__url = 'https://vulners.com/canvas/';
+																		break;
+
+																	case 'packetstorm':
+																		scannedPortScriptVulnersKey.__url = 'https://vulners.com/packetstorm/';
+																		break;
+
+																	case 'metasploit':
+																		scannedPortScriptVulnersKey.__url = 'https://vulners.com/metasploit/';
+																		break;
+
+																	case 'zdt':
+																		scannedPortScriptVulnersKey.__url = 'https://vulners.com/zdt/';
+																		break;
+
+																	default:
+																		scannedPortScriptVulnersKey.__url = null;
+																		break;
+																}
+															}
+														});
+
+														if (typeof scannedPortScriptVulnersKey.__url !== null) {
+															html += '<td><a href="' + scannedPortScriptVulnersKey.__url + scannedPortScriptVulnersKey.__text + '" target="_blank">' + scannedPortScriptVulnersKey.__text + '</a></td>';
+														}
+														else {
+															html += '<td>' + scannedPortScriptVulnersKey.__text + '</td>';
+														}
+													}
+													else {
+														html += '<td>' + scannedPortScriptVulnersKey.__text + '</td>';
+													}
+												}
+
+												html += '</tr>';
+												html += '</tbody>';
+												html += '</table>';
+											}
+										}
 										html += '</td>';
 										break;
-
-									case 'dns-nsid':
-										html += '<td>';
-										html += '<table class="ui celled inverted table">';
-										html += '<thead>';
-										html += '<tr>';
-										html += '<th>Id</th>';
-										html += '<th>Output</th>';
-										html += '</tr>';
-										html += '</thead>';
-										html += '<tbody>';
-
-										html += '</tbody>';
-										html += '</table>';
-										html += '</td>';
-										break; */
 
 									case 'ssh-hostkey':
 										html += '<td>';
@@ -593,16 +647,15 @@ $(function () {
 											for (let indexC = 0; indexC < scannedPortScript.table.length; indexC++) {
 												const scannedPortScriptSSH = scannedPortScript.table[indexC];
 
-												console.log(scannedPortScriptSSH);
-
 												html += '<table class="ui fixed single line celled inverted table">';
 												html += '<thead>';
 												html += '<tr>';
 
 												// Get a consistent table header as the order is imposible to predict
 												for (let indexD = 0; indexD < scannedPortScriptSSH.elem.length; indexD++) {
-													const scannedPortScriptSSHKey = scannedPortScriptSSH.elem[indexD];
-													html += '<th>' + scannedPortScriptSSHKey._key + '</th>';
+													const scannedPortScriptSSHHeader = scannedPortScriptSSH.elem[indexD];
+
+													html += '<th>' + scannedPortScriptSSHHeader._key + '</th>';
 												}
 
 												html += '</tr>';
@@ -644,7 +697,51 @@ $(function () {
 
 							html += '<tr>';
 							html += '<td>' + scannedPortScript._id + '</td>';
-							html += '<td>' + scannedPortScript._output + '</td>';
+
+							switch (scannedPortScript._id) {
+								case 'dns-nsid':
+									html += '<td>';
+									if (scannedPortScript.elem) {
+										html += '<table class="ui fixed single line celled inverted table">';
+										html += '<thead>';
+										html += '<tr>';
+
+										// Get a consistent table header as the order is imposible to predict
+										for (let indexB = 0; indexB < scannedPortScript.elem.length; indexB++) {
+											const scannedPortScriptDNSHeader = scannedPortScript.elem[indexB];
+											console.log(scannedPortScriptDNSHeader);
+
+											html += '<th>' + scannedPortScriptDNSHeader._key + '</th>';
+										}
+
+										html += '</tr>';
+										html += '</thead>';
+										html += '<tbody>';
+										html += '<tr>';
+
+										for (let indexC = 0; indexC < scannedPortScript.elem.length; indexC++) {
+											const scannedPortScriptDNSKey = scannedPortScript.elem[indexC];
+
+											if (scannedPortScriptDNSKey._key === 'key') {
+												html += '<td class="tooltipped" data-inverted="true" data-position="bottom center" title="' + scannedPortScriptDNSKey.__text + '">' + scannedPortScriptDNSKey.__text + '</td>';
+											}
+											else {
+												html += '<td>' + scannedPortScriptDNSKey.__text + '</td>';
+											}
+										}
+
+										html += '</tr>';
+										html += '</tbody>';
+										html += '</table>';
+									}
+									html += '</td>';
+									break;
+
+									default:
+										html += '<td>' + scannedPortScript._output + '</td>';
+										break;
+							}
+
 							html += '</tr>';
 						}
 
