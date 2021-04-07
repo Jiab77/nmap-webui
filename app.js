@@ -25,7 +25,7 @@ $(function () {
 		if ($target !== '') {
 			// Enable stop button
 			$('#stop-scan').removeClass('disabled');
-	
+
 			// Show loading state on button
 			$('#start-scan i').removeClass('play icon');
 			$('#start-scan i').addClass('spinner loading icon');
@@ -35,8 +35,8 @@ $(function () {
 			$('#parsed-output-segment').addClass('loading');
 
 			// Display test dialog
-			UI.createDialog('Scanning ' + $target + '...');
-			
+			UI.createToast('Scanning ' + $target + '...');
+
 			// Send scan request
 			console.log('Target:', $target);
 			console.log('This:', $(this));
@@ -72,14 +72,14 @@ $(function () {
 					$('#stop-scan').addClass('disabled');
 
 					// Display test dialog
-					UI.createDialog('Scan finished.');
+					UI.createToast('Scan finished.');
 
 					// test sub request
 					displayReport();
 				},
 				onFailure: function(response, element, xhr) {
 					// Request failed, or valid response but response.success = false
-					UI.createDialog('Request failed.', 'error');
+					UI.createToast('Request failed.', 'error');
 
 					// Debug
 					console.group('Parser');
@@ -99,7 +99,7 @@ $(function () {
 				},
 				onError: function(errorMessage, element, xhr) {
 					// Invalid response
-					UI.createDialog(errorMessage, 'error');
+					UI.createToast(errorMessage, 'error');
 
 					// Debug
 					console.group('Parser');
@@ -119,7 +119,7 @@ $(function () {
 				},
 				onAbort: function(errorMessage, element, xhr) {
 					// Navigated to a new page, CORS issue, or user canceled request
-					UI.createDialog(errorMessage, 'warning');
+					UI.createToast(errorMessage, 'warning');
 
 					// Debug
 					console.group('Parser');
@@ -141,7 +141,7 @@ $(function () {
 		}
 		else {
 			// Display test error dialog
-			UI.createDialog('Target not defined.', 'error');
+			UI.createToast('Target not defined.', 'error');
 
 			// Display error in console
 			console.group('App');
@@ -170,7 +170,7 @@ $(function () {
 		$('#stop-scan').addClass('disabled');
 
 		// Display test dialog
-		UI.createDialog('Scan stopped...');
+		UI.createToast('Scan stopped...');
 	});
 
 	function displayReport() {
@@ -184,7 +184,7 @@ $(function () {
 					// Debug
 					console.group('Parser');
 					console.log('Got raw output:', response);
-					
+
 					// Parse server response
 					Report.parseFile(response, '#parsed-output');
 
@@ -202,11 +202,11 @@ $(function () {
 					console.groupEnd();
 
 					// Display test dialog
-					UI.createDialog('Report received.');
+					UI.createToast('Report received.');
 				},
 				onFailure: function(response, element, xhr) {
 					// Request failed, or valid response but response.success = false
-					UI.createDialog('Request failed.', 'error');
+					UI.createToast('Request failed.', 'error');
 
 					// Debug
 					console.group('Parser');
@@ -215,7 +215,7 @@ $(function () {
 				},
 				onError: function(errorMessage, element, xhr) {
 					// Invalid response
-					UI.createDialog(errorMessage, 'error');
+					UI.createToast(errorMessage, 'error');
 
 					// Debug
 					console.group('Parser');
@@ -224,7 +224,7 @@ $(function () {
 				},
 				onAbort: function(errorMessage, element, xhr) {
 					// Navigated to a new page, CORS issue, or user canceled request
-					UI.createDialog(errorMessage, 'warning');
+					UI.createToast(errorMessage, 'warning');
 
 					// Debug
 					console.group('Parser');
